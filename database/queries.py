@@ -7,7 +7,7 @@ from database.db import get_connection
 # КАТЕГОРИИ
 # =====================================
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=1)
 
 def get_categories():
     conn = get_connection()
