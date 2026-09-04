@@ -35,7 +35,7 @@ def get_categories():
 # АРТИКУЛИ ПО КАТЕГОРИЯ
 # =====================================
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=1)
 def get_items_by_category(category_name):
 
     conn = get_connection()
@@ -45,7 +45,7 @@ def get_items_by_category(category_name):
 
         cur.execute(
             """
-            SELECT DISTINCT ON (mi.item_name, mi.price)
+            SELECT DISTINCT ON (mi.sort_order, mi.item_name)
                 mi.id,
                 mi.item_name,
                 mi.price,
@@ -64,8 +64,8 @@ def get_items_by_category(category_name):
                     OR COALESCE(mi.available_today, FALSE) = TRUE
               )
             ORDER BY
+                mi.sort_order,
                 mi.item_name,
-                mi.price,
                 mi.id
             """,
             (category_name,)
