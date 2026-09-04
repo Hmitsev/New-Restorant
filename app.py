@@ -8,7 +8,6 @@ from database.queries import (
 # =====================================
 # НАСТРОЙКИ НА СТРАНИЦАТА
 # =====================================
-
 st.set_page_config(
    page_icon="🍽️",
     layout="wide"
@@ -610,6 +609,52 @@ else:
                 """,
                 unsafe_allow_html=True
             )
+            drink_variants = {
+
+                "Кока-Кола 250ml": [
+                    "Coca-Cola",
+                    "Coca-Cola Zero"
+                ],
+
+                "Фанта 250ml": [
+                    "Портокал",
+                    "Лимон",
+                    "Екзотик"
+                ],
+
+                "Натурален сок Cappy": [
+                    "Праскова",
+                    "Портокал",
+                    "Ябълка",
+                    "Мултивитамин"
+                ],
+
+                "Студен чай Fuzetea": [
+                    "Праскова",
+                    "Лимон",
+                    "Зелен чай"
+                ],
+
+                "Schweppes Сода": [
+                    "Сода",
+                    "Тоник",
+                    "Bitter Lemon"
+                ]
+            }
+
+            selected_variant = ""
+
+            if item_name in drink_variants:
+                
+                variant_col, _ = st.columns([2, 8])
+
+                with variant_col:
+                
+                    selected_variant = st.selectbox(
+                        "",
+                        drink_variants[item_name],
+                        key=f"variant_{item_id}_{item_index}"
+                    )
 
         # =====================================
         # ИНФОРМАЦИЯ И КОМЕНТАР
@@ -720,13 +765,14 @@ else:
 
             st.markdown(
                 f"""
-                <span style="
+                <div style="
                     color:#FFD54F;
                     font-weight:700;
                     font-size:18px;
+                    padding-left:15px;
                 ">
                     € {price:.2f}
-                </span>
+                </div>
                 """,
                 unsafe_allow_html=True
             )
@@ -734,6 +780,7 @@ else:
         # =====================================
         # ДОБАВЯНЕ В КОЛИЧКАТА
         # =====================================
+        
 
         with col4:
 
@@ -763,7 +810,7 @@ else:
                 )
 
             if st.button(
-                "Добави",
+                "🛒 Добави",
                 key=f"add_{item_id}_{item_index}"
             ):
 
@@ -772,9 +819,16 @@ else:
                     ""
                 )
 
+                final_name = item_name
+
+                if item_name in drink_variants and selected_variant:
+                    final_name = (
+                        f"{item_name} - {selected_variant}"
+                    )
+
                 add_to_cart(
                     item_id=item_id,
-                    item_name=item_name,
+                    item_name=final_name,
                     price=price,
                     note=saved_comment
                 )
