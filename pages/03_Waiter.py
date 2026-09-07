@@ -153,7 +153,7 @@ active_count = len(
 # =====================================
 
 st_autorefresh(
-    interval=20000,
+    interval=15000,
     key="waiter_refresh"
 )
 
@@ -424,30 +424,30 @@ else:
             # ОБЩ СТАТУС
             # =====================================
 
-            item_statuses = [
-                item["status"]
-                for item in items
-            ]
-
-            all_served_status = (
-                len(item_statuses) > 0
-                and all(
-                    status == "SERVED"
-                    for status in item_statuses
-                )
-            )
-
-            all_ready_or_served = (
-                len(item_statuses) > 0
-                and all(
-                    status in ("READY", "SERVED")
-                    for status in item_statuses
-                )
-            )
+            all_served_status = True
+            all_ready_or_served = True
+            
+            for item in items:
+            
+                department = str(
+                    item["department"] or ""
+                ).lower()
+            
+                status = item["status"]
+            
+                # напитките винаги са готови
+                if department == "bar":
+                    continue
+            
+                if status != "SERVED":
+                    all_served_status = False
+            
+                if status not in ("READY", "SERVED"):
+                    all_ready_or_served = False
 
             any_preparing = any(
-                status == "PREPARING"
-                for status in item_statuses
+                item["status"] == "PREPARING"
+                for item in items
             )
 
             if all_served_status:
@@ -502,7 +502,7 @@ else:
                     if item_status == "SERVED":
                         st.info("✅ Сервирано")
                     elif department == "bar":
-                        st.info("🍹 Напитка")
+                        st.info("🧋 Напитка")
                     elif item_status == "NEW":
                         st.error("🔴 Нова")
                     elif item_status == "PREPARING":
