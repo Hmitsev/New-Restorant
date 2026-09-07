@@ -502,7 +502,7 @@ else:
                     if item_status == "SERVED":
                         st.info("✅ Сервирано")
                     elif department == "bar":
-                        st.info("🧋 Напитка")
+                        st.info("🥛 Напитка")
                     elif item_status == "NEW":
                         st.error("🔴 Нова")
                     elif item_status == "PREPARING":
