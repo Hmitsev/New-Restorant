@@ -331,16 +331,16 @@ categories = get_categories()
 
 category_display = {
     "Дневно меню": "📅 🔥 ДНЕВНО МЕНЮ",
-    "Салати": "🥗 Салати",
-    "Разядки и студени предястия": "🧀 Предястия",
-    "Топли предложения за споделяне": "🍲 За споделяне",
-    "Риба и морски дарове": "🦐 Морски дарове",
-    "Паста и ризото": "🍝 Паста и ризото",
-    "Приготвено на плоча": "🥩 На плоча",
-    "Основни ястия": "🍖 Основни ястия",
-    "От краче до уше": "🍗 От краче до уше",
-    "Бургери": "🍔 Бургери",
-    "Десерти": "🍰 Десерти",
+    "Салати": "⚜ Салати",
+    "Разядки и студени предястия": "⚜ Предястия",
+    "Топли предложения за споделяне": "⚜ За споделяне",
+    "Риба и морски дарове": "⚜ Морски дарове",
+    "Паста и ризото": "⚜ Паста и ризото",
+    "Приготвено на плоча": "⚜ На плоча",
+    "Основни ястия": "⚜ Основни ястия",
+    "От краче до уше": "⚜ От краче до уше",
+    "Бургери": "⚜ Бургери",
+    "Десерти": "⚜ Десерти",
     "Напитки": "🥂 Напитки"
 }
 category_grams = {
@@ -354,6 +354,19 @@ category_grams = {
     "От краче до уше": "400 гр.",
     "Бургери": "450 гр.",
     "Десерти": "1 бр."
+}
+category_banners = {
+    "📅 🔥 ДНЕВНО МЕНЮ": "assets/01_dnevno_menu.png",
+    "⚜ Салати": "assets/02_salati.png",
+    "⚜ Предястия": "assets/03_predyastiya.png",
+    "⚜ За споделяне": "assets/04_za_spodelyane.png",
+    "⚜ Морски дарове": "assets/05_morski_darove.png",
+    "⚜ Паста и ризото": "assets/06_pasta_i_rizoto.png",
+    "⚜ На плоча": "assets/07_na_plocha.png",
+    "⚜ Основни ястия": "assets/08_osnovni_yastiya.png",
+    "⚜ От краче до уше": "assets/09_ot_krache_do_ushe.png",
+    "⚜ Бургери": "assets/10_burgeri.png",
+    "⚜ Десерти": "assets/11_deserti.png"
 }
 reverse_display = {
     value: key
@@ -403,6 +416,13 @@ if main_section_grams:
 items = get_items_by_category(
     selected_category
 )
+main_banner = category_banners.get(selected_display)
+
+if main_banner:
+    st.image(
+        main_banner,
+        use_container_width=True
+    )
 # =====================================
 # ПОДКАТЕГОРИИ НА ДНЕВНОТО МЕНЮ
 # =====================================
@@ -461,6 +481,24 @@ if selected_category == "Напитки":
         default="☕ Топли напитки",
         key="drink_group_selector"
     )
+
+    drink_banners = {
+        "☕ Топли напитки": "assets/12_topli_napitki.png",
+        "🥤 Безалкохолни": "assets/13_gazirani_napitki.png",
+        "🍺 Бира и сайдер": "assets/фон бира.png",
+        "🍷 Вина": "assets/фон вина.jpeg",
+        "🥃 Алкохол": "assets/фон алкохол.jpeg"
+    }
+
+    banner_path = drink_banners.get(selected_drink_group)
+
+    if banner_path:
+        st.image(
+            banner_path,
+            width=700
+        )
+
+        st.markdown("<br>", unsafe_allow_html=True)
 
     items = [
         item
@@ -659,11 +697,11 @@ else:
         # =====================================
         # ИНФОРМАЦИЯ И КОМЕНТАР
         # =====================================
-
+        
         with col2:
-
+        
             with st.popover("ℹ️"):
-
+        
                 st.markdown(
                     f"""
                     <div style="
@@ -677,29 +715,55 @@ else:
                     </div>
                     """,
                     unsafe_allow_html=True
-                )
-
-                image_path = burger_images.get(
-                    item_name
-                )
+            )
+    
+                drink_images = {
+                    "Кока-Кола 250ml": "assets/kola.png",
+                    "Спрайт 250ml": "assets/sprite.png",
+                    "Фанта 250ml": "assets/fanta port.png",
+                    "Минерална вода Банкя 330ml": "assets/bankq.png",
+                
+                    "Натурален сок Cappy": "assets/kapu praskova.png",
+                    "Студен чай Fuzetea": "assets/stud.chai.png",
+                    "Red Bull": "assets/red bul.png",
+                    "Фреш 200ml": "assets/фреш.png",
+                
+                    "Капучино": "assets/kapochino.png",
+                    "Бяло фрапе": "assets/фон топла напитка.png",
+                    "Бяло фрапе с вкус": "assets/фон топла напитка.png",
+                    "Черно фрапе": "assets/фон топла напитка.png",
+                
+                    "Beluga": "assets/beluga.png",
+                    "Руски стандарт": "assets/ruski stand.png",
+                    "Бургас 63": "assets/burgas 63.png",
+                
+                    "Bushmills": "assets/bushmils.png",
+                    "Bushmills Black": "assets/bushmils black.png",
+                    "Jack Daniels": "assets/jack.png",
+                    "Jameson": "assets/jameson.png",
+                    "Jameson Black Barrel": "assets/jameson.png"
+                }
+    
+                image_path = burger_images.get(item_name)
+    
+                if not image_path:
+                    image_path = drink_images.get(item_name)
 
                 if image_path:
-
+        
                     try:
-
                         st.image(
                             image_path,
                             use_container_width=True
                         )
-
+        
                     except Exception:
-
                         st.caption(
                             "Снимката временно не е налична."
                         )
-
+        
                 if item_drink_group == "🥃 Алкохол":
-
+        
                     st.markdown(
                         """
                         <div style="
@@ -717,46 +781,45 @@ else:
                         """,
                         unsafe_allow_html=True
                     )
-
+        
                 if description:
-
+        
                     st.write(
                         description
                     )
-
+        
                 else:
-
+        
                     st.info(
                         "Няма описание."
                     )
-
+        
                 comment_label = "Коментар"
-                
+        
                 if selected_category not in (
                     "Напитки",
                 ):
                     comment_label = "Коментар към кухнята"
-                
+        
                 comment = st.text_area(
                     comment_label,
                     placeholder=" коментар",
                     key=f"comment_{item_id}_{item_index}",
                     height=80
                 )
-
+        
                 if st.button(
                     "Запази коментар",
                     key=f"save_{item_id}_{item_index}"
                 ):
-
+        
                     st.session_state[
                         f"saved_note_{item_id}_{item_index}"
                     ] = comment
-
+        
                     st.success(
                         "Коментарът е запазен."
                     )
-
         # =====================================
         # ЦЕНА
         # =====================================
