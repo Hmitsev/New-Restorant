@@ -10,9 +10,98 @@ from database.db import get_connection
 
 st.set_page_config(
     page_title="Кухня",
-    page_icon="👨‍🍳",
+    page_icon="🔪",
     layout="wide"
 )
+import base64
+
+# =====================================
+# BACKGROUND
+# =====================================
+
+def set_kitchen_background():
+    with open("assets/Designer (10).png", "rb") as f:
+        encoded = base64.b64encode(f.read()).decode()
+
+    st.markdown(
+        f"""
+        <style>
+
+        .stApp {{
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.55),
+                    rgba(0,0,0,0.80)
+                ),
+                url("data:image/png;base64,{encoded}");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+set_kitchen_background()
+st.markdown("""
+<style>
+
+/* Заглавие Кухня */
+h1 {
+    color: #D4AF37 !important;
+    text-shadow: 0 0 12px rgba(212,175,55,0.4);
+}
+
+/* Подзаглавия */
+h2, h3, h4 {
+    color: #D4AF37 !important;
+}
+
+/* Общ текст */
+p, label, span {
+    color: #F5E6A8 !important;
+}
+
+/* Успех */
+[data-testid="stAlert"] {
+    background: rgba(0,0,0,0.55) !important;
+    border: 1px solid rgba(212,175,55,0.35) !important;
+}
+
+/* Колони и контейнери */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(212,175,55,0.20);
+    border-radius: 12px;
+}
+
+/* Popover */
+[data-testid="stPopover"] {
+    background: rgba(20,20,20,0.95);
+}
+
+/* Табове */
+.stTabs [data-baseweb="tab"] {
+    color: #D4AF37 !important;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #FFD700 !important;
+    border-bottom: 2px solid #D4AF37 !important;
+}
+
+/* Инфо лентата "Активни поръчки" */
+.stAlert p {
+    color: #D4AF37 !important;
+    font-weight: 700 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 # =====================================
 # ДОСТЪП ДО КУХНЯ
 # =====================================
@@ -257,7 +346,7 @@ title_col, daily_menu_col = st.columns([5, 2])
 
 with title_col:
 
-    st.title("👨‍🍳 Кухня")
+    st.title("🔪 Кухня")
 
 with daily_menu_col:
 
