@@ -10,9 +10,86 @@ from database.db import get_connection
 
 st.set_page_config(
     page_title="Сервитьор",
-    page_icon="🤵",
     layout="wide"
 )
+import base64
+
+# =====================================
+# BACKGROUND
+# =====================================
+
+def set_waiter_background():
+    with open("assets/Designer (11).png", "rb") as f:
+        encoded = base64.b64encode(f.read()).decode()
+
+    st.markdown(
+        f"""
+        <style>
+
+        .stApp {{
+            background:
+                linear-gradient(
+                    rgba(0,0,0,0.55),
+                    rgba(0,0,0,0.80)
+                ),
+                url("data:image/png;base64,{encoded}");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }}
+
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+set_waiter_background()
+st.markdown("""
+<style>
+
+/* Главно заглавие */
+h1 {
+    color: #D4AF37 !important;
+    text-shadow: 0 0 12px rgba(212,175,55,0.4);
+}
+
+/* Подзаглавия */
+h2, h3 {
+    color: #D4AF37 !important;
+}
+
+/* Текст */
+p, label, span {
+    color: #F5E6A8 !important;
+}
+
+/* Info box */
+[data-testid="stAlert"] {
+    background: rgba(0,0,0,0.55) !important;
+    border: 1px solid rgba(212,175,55,0.35) !important;
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab"] {
+    color: #D4AF37 !important;
+    font-weight: 600;
+}
+
+/* Активен таб */
+.stTabs [aria-selected="true"] {
+    color: #FFD700 !important;
+    border-bottom: 2px solid #D4AF37 !important;
+}
+
+/* Статистика и броячи */
+[data-testid="stMetricValue"] {
+    color: #D4AF37 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 # =====================================
 # ДОСТЪП ДО СЕРВИТЬОР
 # =====================================
@@ -40,7 +117,7 @@ if not st.session_state.waiter_auth:
 # =====================================
 # ЗАГЛАВИЕ
 # =====================================
-st.title("🤵 Сервитьор")
+st.title(" Сервитьор")
 # =====================================
 # ИСТОРИЯ НА ПРИКЛЮЧЕНИ ПОРЪЧКИ (24Ч)
 # =====================================
